@@ -3,8 +3,9 @@ package net.rafael.api_library.main_project.Models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,20 +20,25 @@ public class Author {
     private String name;
 
     @Column(name = "birthdate",nullable = false)
-    private Date birth_date;
+    private LocalDate birth_date;
 
     @Column(name = "Origin",nullable = false)
     private String from;
+
+    @OneToMany(mappedBy = "AuthorId")
+    @Column(name = "books")
+    private List<Book> Books;
 
     public Author() {
         //Empty Constructor
     }
 
-    public Author(UUID id, String name, Date birth_date, String from) {
+    public Author(UUID id, String name, LocalDate birth_date, String from,List<Book> Books) {
         this.id = id;
         this.name = name;
         this.birth_date = birth_date;
         this.from = from;
+        this.Books = Books;
     }
 
     public UUID getId() {
@@ -51,11 +57,11 @@ public class Author {
         this.name = name;
     }
 
-    public Date getBirth_date() {
+    public LocalDate getBirth_date() {
         return birth_date;
     }
 
-    public void setBirth_date(Date birth_date) {
+    public void setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
     }
 
@@ -67,16 +73,7 @@ public class Author {
         this.from = from;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Author author = (Author) object;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(birth_date, author.birth_date) && Objects.equals(from, author.from);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, birth_date, from);
+    public void setBooks(List<Book> Books) {
+        this.Books = Books;
     }
 }
