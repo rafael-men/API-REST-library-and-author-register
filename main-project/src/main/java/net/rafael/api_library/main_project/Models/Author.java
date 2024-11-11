@@ -24,7 +24,7 @@ public class Author {
     private String name;
 
     @Column(name = "birthdate",nullable = false)
-    private LocalDate birth_date;
+    private LocalDate birthDate;
 
     @Column(name = "Origin",nullable = false)
     private String from;
@@ -42,10 +42,10 @@ public class Author {
     public Author() {
     }
 
-    public Author(UUID id, String name, LocalDate birth_date, List<Book> books, String from, LocalDateTime register_date, UUID user_id) {
+    public Author(UUID id, String name, LocalDate birthDate, List<Book> books, String from, LocalDateTime register_date, UUID user_id) {
         this.id = id;
         this.name = name;
-        this.birth_date = birth_date;
+        this.birthDate = birthDate;
         Books = books;
         this.from = from;
         Register_date = register_date;
@@ -68,12 +68,12 @@ public class Author {
         this.name = name;
     }
 
-    public LocalDate getBirth_date() {
-        return birth_date;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(LocalDate birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getFrom() {
@@ -113,11 +113,11 @@ public class Author {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Author author = (Author) object;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(birth_date, author.birth_date) && Objects.equals(from, author.from) && Objects.equals(Books, author.Books) && Objects.equals(Register_date, author.Register_date) && Objects.equals(user_id, author.user_id);
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(birthDate, author.birthDate) && Objects.equals(from, author.from) && Objects.equals(Books, author.Books) && Objects.equals(Register_date, author.Register_date) && Objects.equals(user_id, author.user_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birth_date, from, Books, Register_date, user_id);
+        return Objects.hash(id, name, birthDate, from, Books, Register_date, user_id);
     }
 }
