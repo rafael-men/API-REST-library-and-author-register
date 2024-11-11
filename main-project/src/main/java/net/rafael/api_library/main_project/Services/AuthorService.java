@@ -1,7 +1,10 @@
 package net.rafael.api_library.main_project.Services;
 
+import net.rafael.api_library.main_project.Exceptions.OperationNotAllowedException;
 import net.rafael.api_library.main_project.Models.Author;
 import net.rafael.api_library.main_project.Repository.AuthorRepository;
+import net.rafael.api_library.main_project.Validations.AuthorValidator;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +15,16 @@ import java.util.UUID;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final AuthorValidator validator;
 
-    public AuthorService (AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, AuthorValidator validator) {
         this.authorRepository = authorRepository;
+        this.validator = validator;
     }
 
+
     public Author save(Author author) {
+        validator.validate(author);
         return authorRepository.save(author);
     }
 
@@ -46,6 +53,9 @@ public class AuthorService {
         if(author.getId() == null) {
             throw new IllegalArgumentException("Author must be saved in the database");
         }
+        validator.validate(author);
         authorRepository.save(author);
     }
+
+
 }

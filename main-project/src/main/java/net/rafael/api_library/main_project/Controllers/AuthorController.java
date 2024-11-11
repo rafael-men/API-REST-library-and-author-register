@@ -2,12 +2,13 @@ package net.rafael.api_library.main_project.Controllers;
 
 
 import net.rafael.api_library.main_project.Dto.AuthorDTO;
+import net.rafael.api_library.main_project.Exceptions.DuplicatedRegisterException;
 import net.rafael.api_library.main_project.Models.Author;
 import net.rafael.api_library.main_project.Services.AuthorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.util.List;
 import java.net.URI;
 import java.util.Optional;
@@ -18,24 +19,30 @@ import java.util.stream.Collectors;
 @RequestMapping("/author")
 public class AuthorController {
 
+
     private final AuthorService service;
 
     public AuthorController(AuthorService service) {
         this.service = service;
     }
 
+
     @PostMapping("/new")
-    public ResponseEntity<?> saveAuthor(@RequestBody  AuthorDTO author) {
+    public ResponseEntity<Void> saveAuthor(@RequestBody  AuthorDTO author) {
+        try {
+            Author authorEntity = author.mapForAuthor();
+            service.save(authorEntity);
 
-        Author authorEntity = author.mapForAuthor();
-        service.save(authorEntity);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("id")
-                .buildAndExpand(authorEntity.getId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("id")
+                    .buildAndExpand(authorEntity.getId())
+                    .toUri();
+            return ResponseEntity.created(location).build();
+        } catch (DuplicatedRegisterException e){
+            String errorMessage = "Fatal Error conflict: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.CONFLICT).header("Error-Message", errorMessage).build();
+        }
     }
 
     @GetMapping("/{id}")
@@ -44,7 +51,7 @@ public class AuthorController {
         Optional<Author> author = service.findById(AuthorId);
         if(author.isPresent()) {
             Author entity = author.get();
-            AuthorDTO dto = new AuthorDTO(author.get().getId(), author.get().getName(),author.get().getBirth_date(),author.get().getFrom());
+            AuthorDTO dto = new AuthorDTO(author.get().getId(), author.get().getName(),author.get().getBirthDate(),author.get().getFrom());
             return ResponseEntity.ok(dto);
         }
         return ResponseEntity.notFound().build();
@@ -64,7 +71,7 @@ public class AuthorController {
     @GetMapping("/filtersearch")
     public ResponseEntity<List<AuthorDTO>>  searchAuthorWithFilters(@RequestParam(value = "name",required = false) String name,@RequestParam(value = "from",required = false) String from) {
         List<Author> result = service.searchWithFilters(name, from);
-        List<AuthorDTO> list = result.stream().map(author -> new AuthorDTO(author.getId(), author.getName(), author.getBirth_date(),author.getFrom())).collect(Collectors.toList());
+        List<AuthorDTO> list = result.stream().map(author -> new AuthorDTO(author.getId(), author.getName(), author.getBirthDate(),author.getFrom())).collect(Collectors.toList());
         return ResponseEntity.ok(list);
     }
 
@@ -78,7 +85,7 @@ public class AuthorController {
         var authortwo = author.get();
         authortwo.setName(dto.name());
         authortwo.setFrom(dto.from());
-        authortwo.setBirth_date(dto.birth_date());
+        authortwo.setBirthDate(dto.birthDate());
 
         service.updateAuthor(authortwo);
         return ResponseEntity.noContent().build();
