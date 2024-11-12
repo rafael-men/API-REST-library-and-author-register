@@ -1,6 +1,8 @@
 package net.rafael.api_library.main_project.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,13 +25,13 @@ public class Author {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "birthdate",nullable = false)
+    @Column(name = "birthdate")
     private LocalDate birthDate;
 
     @Column(name = "Origin",nullable = false)
     private String from;
 
-    @OneToMany(mappedBy = "AuthorId")
+    @OneToMany(mappedBy = "author")
     @Column(name = "books")
     private List<Book> Books;
 
@@ -42,7 +44,8 @@ public class Author {
     public Author() {
     }
 
-    public Author(UUID id, String name, LocalDate birthDate, List<Book> books, String from, LocalDateTime register_date, UUID user_id) {
+    @JsonCreator
+    public Author(UUID id, @JsonProperty("name") String name, LocalDate birthDate, List<Book> books, String from, LocalDateTime register_date, UUID user_id) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;

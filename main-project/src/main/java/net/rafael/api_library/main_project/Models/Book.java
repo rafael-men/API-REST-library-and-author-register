@@ -31,21 +31,21 @@ public class Book {
     @Column(nullable = false)
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author AuthorId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "author")
+    private Author author;
 
     public Book() {
     }
 
-    public Book(UUID id, String isbn, String title, LocalDate publicationDate, Double price, BookGenres genre, Author authorId) {
+    public Book(UUID id, String isbn, String title, LocalDate publicationDate, Double price, BookGenres genre, Author author) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.publicationDate = publicationDate;
         this.price = price;
         this.genre = genre;
-        AuthorId = authorId;
+        author = author;
     }
 
     public UUID getId() {
@@ -96,12 +96,12 @@ public class Book {
         this.price = price;
     }
 
-    public Author getAuthorId() {
-        return AuthorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Author authorId) {
-        AuthorId = authorId;
+    public void setAuthor(Author author) {
+        author = author;
     }
 
     @Override
@@ -109,11 +109,11 @@ public class Book {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Book book = (Book) object;
-        return Objects.equals(id, book.id) && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(publicationDate, book.publicationDate) && genre == book.genre && Objects.equals(price, book.price) && Objects.equals(AuthorId, book.AuthorId);
+        return Objects.equals(id, book.id) && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(publicationDate, book.publicationDate) && genre == book.genre && Objects.equals(price, book.price) && Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn, title, publicationDate, genre, price, AuthorId);
+        return Objects.hash(id, isbn, title, publicationDate, genre, price, author);
     }
 }
