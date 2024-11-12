@@ -1,10 +1,9 @@
 package net.rafael.api_library.main_project.Services;
 
-import net.rafael.api_library.main_project.Exceptions.OperationNotAllowedException;
+
 import net.rafael.api_library.main_project.Models.Author;
 import net.rafael.api_library.main_project.Repository.AuthorRepository;
 import net.rafael.api_library.main_project.Validations.AuthorValidator;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +26,8 @@ public class AuthorService {
         validator.validate(author);
         return authorRepository.save(author);
     }
+
+
 
     public Optional<Author> findById(UUID id) {
         return authorRepository.findById(id);
@@ -56,6 +57,4 @@ public class AuthorService {
         validator.validate(author);
         authorRepository.save(author);
     }
-
-
 }
