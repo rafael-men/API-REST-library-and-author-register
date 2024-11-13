@@ -1,6 +1,7 @@
 package net.rafael.api_library.main_project.Models;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "books")
+@EntityListeners(AuditingEntityListener.class)
 public class Book {
 
     @Id
@@ -45,7 +47,7 @@ public class Book {
         this.publicationDate = publicationDate;
         this.price = price;
         this.genre = genre;
-        author = author;
+        this.author = author;
     }
 
     public UUID getId() {
@@ -100,8 +102,8 @@ public class Book {
         return author;
     }
 
-    public void setAuthor(Author author) {
-        author = author;
+    public void setAuthorId(Author authorId) {
+        this.author = author;
     }
 
     @Override
@@ -117,3 +119,4 @@ public class Book {
         return Objects.hash(id, isbn, title, publicationDate, genre, price, author);
     }
 }
+
