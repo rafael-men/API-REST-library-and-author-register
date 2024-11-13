@@ -1,6 +1,5 @@
 package net.rafael.api_library.main_project.Models;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -22,13 +21,13 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
-    @Column(name = "Origin",nullable = false)
+    @Column(name = "origin", nullable = false)
     private String from;
 
     @OneToMany(mappedBy = "author")
@@ -37,22 +36,22 @@ public class Author {
 
     @CreatedDate
     @Column(name = "register_date")
-    private LocalDateTime Register_date;
+    private LocalDateTime registerDate;
 
-    private UUID user_id;
+    @Column(name = "user_id")
+    private UUID userId;
 
-    public Author() {
-    }
+    public Author() {}
 
     @JsonCreator
-    public Author(UUID id, @JsonProperty("name") String name, LocalDate birthDate, List<Book> books, String from, LocalDateTime register_date, UUID user_id) {
+    public Author(UUID id, @JsonProperty("name") String name, LocalDate birthDate, List<Book> books, String from, LocalDateTime registerDate, UUID userId) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
-        Books = books;
+        this.Books = books;
         this.from = from;
-        Register_date = register_date;
-        this.user_id = user_id;
+        this.registerDate = registerDate;
+        this.userId = userId;
     }
 
     public UUID getId() {
@@ -87,12 +86,12 @@ public class Author {
         this.from = from;
     }
 
-    public LocalDateTime getRegister_date() {
-        return Register_date;
+    public LocalDateTime getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegister_date(LocalDateTime register_date) {
-        Register_date = register_date;
+    public void setRegisterDate(LocalDateTime registerDate) {
+        this.registerDate = registerDate;
     }
 
     public List<Book> getBooks() {
@@ -100,15 +99,15 @@ public class Author {
     }
 
     public void setBooks(List<Book> books) {
-        Books = books;
+        this.Books = books;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -116,11 +115,11 @@ public class Author {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Author author = (Author) object;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(birthDate, author.birthDate) && Objects.equals(from, author.from) && Objects.equals(Books, author.Books) && Objects.equals(Register_date, author.Register_date) && Objects.equals(user_id, author.user_id);
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(birthDate, author.birthDate) && Objects.equals(from, author.from) && Objects.equals(Books, author.Books) && Objects.equals(registerDate, author.registerDate) && Objects.equals(userId, author.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthDate, from, Books, Register_date, user_id);
+        return Objects.hash(id, name, birthDate, from, Books, registerDate, userId);
     }
 }
