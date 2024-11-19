@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/author")
-public class AuthorController {
+public class AuthorController implements GenericController{
 
 
     private final AuthorService service;
@@ -33,11 +33,7 @@ public class AuthorController {
             Author authorEntity = author.mapForAuthor();
             service.save(authorEntity);
 
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("id")
-                    .buildAndExpand(authorEntity.getId())
-                    .toUri();
+            URI location = generateHeaderLocation(author.id());
             return ResponseEntity.created(location).build();
         } catch (DuplicatedRegisterException e){
             String errorMessage = "Fatal Error conflict: " + e.getMessage();

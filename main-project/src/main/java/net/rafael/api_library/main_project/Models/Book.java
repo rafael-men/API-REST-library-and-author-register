@@ -33,7 +33,7 @@ public class Book {
     @Column(nullable = false)
     private Double price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name = "author")
     private Author author;
 
@@ -102,7 +102,7 @@ public class Book {
         return author;
     }
 
-    public void setAuthorId(Author authorId) {
+    public void setAuthor(Author authorId) {
         this.author = author;
     }
 
