@@ -33,8 +33,8 @@ public class Book {
     @Column(nullable = false)
     private Double price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinColumn(name = "author")
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
     public Book() {
