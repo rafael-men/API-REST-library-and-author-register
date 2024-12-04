@@ -102,7 +102,7 @@ public class Book {
         return author;
     }
 
-    public void setAuthor(Author authorId) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
