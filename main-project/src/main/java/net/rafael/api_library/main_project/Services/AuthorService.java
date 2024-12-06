@@ -57,4 +57,8 @@ public class AuthorService {
         validator.validate(author);
         authorRepository.save(author);
     }
+
+    public List<Author> findAll() {
+        return authorRepository.findAll();
+    }
 }
