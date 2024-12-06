@@ -26,6 +26,15 @@ public class AuthorController implements GenericController{
         this.service = service;
     }
 
+    @GetMapping
+    public ResponseEntity<List<AuthorDTO>> getAllAuthors() {
+        List<Author> authors = service.findAll();
+        List<AuthorDTO> authorsDto = authors.stream()
+                .map(author -> new AuthorDTO(author.getId(), author.getName(), author.getBirthDate(), author.getFrom()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(authorsDto);
+    }
+
 
     @PostMapping("/new")
     public ResponseEntity<Void> saveAuthor(@RequestBody  AuthorDTO author) {
@@ -86,5 +95,30 @@ public class AuthorController implements GenericController{
         service.updateAuthor(authortwo);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/HalfUpdate/{id}")
+    public ResponseEntity<Void> partiallyUpdateAuthor(@PathVariable("id") String id, @RequestBody AuthorDTO dto) {
+        var idAuthor = UUID.fromString(id);
+        Optional<Author> author = service.findById(idAuthor);
+
+        if (author.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var existingAuthor = author.get();
+
+        if (dto.name() != null && !dto.name().isBlank()) {
+            existingAuthor.setName(dto.name());
+        }
+        if (dto.from() != null && !dto.from().isBlank()) {
+            existingAuthor.setFrom(dto.from());
+        }
+        if (dto.birthDate() != null) {
+            existingAuthor.setBirthDate(dto.birthDate());
+        }
+
+        service.updateAuthor(existingAuthor);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
