@@ -10,6 +10,7 @@ import net.rafael.api_library.main_project.Models.BookGenres;
 import net.rafael.api_library.main_project.Services.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class BookController implements GenericController{
     }
 
     @PostMapping("/new")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<Object> createBook(@RequestBody @Valid BookDto dto) {
         try {
             Book book = bookMapper.toEntity(dto);
@@ -52,6 +54,7 @@ public class BookController implements GenericController{
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<SearchBookDto> getBooksbyId(@PathVariable("id") String id) {
         return service.findById(UUID.fromString(id))
                 .map(book -> {
@@ -61,6 +64,7 @@ public class BookController implements GenericController{
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<List<SearchBookDto>> searchBook(@RequestParam(value = "isbn",required = false) String isbn, @RequestParam(value = "title",required = false) String title, @RequestParam(value = "author",required = false) String author,@RequestParam(value = "genre",required = false) BookGenres genre) {
         var result = service.searchWithFilters(isbn,title,genre);
         var list =  result.stream().map(bookMapper::toDTO).collect(Collectors.toList());
@@ -68,6 +72,7 @@ public class BookController implements GenericController{
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<Object> delete(@PathVariable("id") String id) {
         return service.findById(UUID.fromString(id))
                 .map(book -> {
@@ -77,6 +82,7 @@ public class BookController implements GenericController{
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<Object> updateBook(@PathVariable("id")String id,@RequestBody @Valid BookDto dto) {
         return service.findById(UUID.fromString(id)).map(book -> {
             Book entity = bookMapper.toEntity(dto);
@@ -94,6 +100,7 @@ public class BookController implements GenericController{
     }
 
     @PatchMapping("/updatePartially/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<SearchBookDto> updateBookPartially(@PathVariable("id") UUID id, @RequestBody @Valid BookDto dto) {
         return service.findById(id)
                 .map(existingBook -> {
