@@ -29,9 +29,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
+                        authorize.requestMatchers("/author/**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
                     authorize.anyRequest().authenticated();
-                }).build();
+                }).oauth2Login(Customizer.withDefaults()).build();
     }
 
     @Bean
@@ -39,10 +40,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
+    @Bean  //correção do erro Unauthorized
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user = User.builder().username("Admnistrador").password(encoder.encode("admin1234")).roles("ADMIN").build();
-        UserDetails user2 = User.builder().username("User").password(encoder.encode("1234")).roles("USER").build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user = User.builder()
+                .username("Administrador")
+                .password(encoder.encode("admin1234"))
+                .roles("ADMIN")
+                .build();
+        UserDetails user2 = User.builder()
+                .username("User")
+                .password(encoder.encode("1234"))
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(user, user2);
     }
+
 }

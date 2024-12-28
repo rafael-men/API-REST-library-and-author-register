@@ -7,7 +7,6 @@ import net.rafael.api_library.main_project.Models.Author;
 import net.rafael.api_library.main_project.Services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.net.URI;
@@ -27,7 +26,6 @@ public class AuthorController implements GenericController{
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AuthorDTO>> getAllAuthors() {
         List<Author> authors = service.findAll();
         List<AuthorDTO> authorsDto = authors.stream()
@@ -38,7 +36,6 @@ public class AuthorController implements GenericController{
 
 
     @PostMapping("/new")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> saveAuthor(@RequestBody  AuthorDTO author) {
         try {
             Author authorEntity = author.mapForAuthor();
@@ -53,7 +50,6 @@ public class AuthorController implements GenericController{
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<AuthorDTO> acquireDetails(@PathVariable("id") String id) {
         var AuthorId = UUID.fromString(id);
         Optional<Author> author = service.findById(AuthorId);
@@ -66,7 +62,6 @@ public class AuthorController implements GenericController{
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteAuthorById(@PathVariable("id") String id) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> author = service.findById(idAuthor);
@@ -78,7 +73,6 @@ public class AuthorController implements GenericController{
     }
 
     @GetMapping("/filtersearch")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<List<AuthorDTO>>  searchAuthorWithFilters(@RequestParam(value = "name",required = false) String name,@RequestParam(value = "from",required = false) String from) {
         List<Author> result = service.searchWithFilters(name, from);
         List<AuthorDTO> list = result.stream().map(author -> new AuthorDTO(author.getId(), author.getName(), author.getBirthDate(),author.getFrom())).collect(Collectors.toList());
@@ -86,7 +80,6 @@ public class AuthorController implements GenericController{
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateAuthor(@PathVariable("id") String id, @RequestBody() AuthorDTO dto) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> author = service.findById(idAuthor);
@@ -103,7 +96,6 @@ public class AuthorController implements GenericController{
     }
 
     @PatchMapping("/HalfUpdate/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> partiallyUpdateAuthor(@PathVariable("id") String id, @RequestBody AuthorDTO dto) {
         var idAuthor = UUID.fromString(id);
         Optional<Author> author = service.findById(idAuthor);
