@@ -29,10 +29,16 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
+<<<<<<< HEAD
                         authorize.requestMatchers("/author/**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
                     authorize.anyRequest().authenticated();
                 }).oauth2Login(Customizer.withDefaults()).build();
+=======
+                    authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
+                    authorize.anyRequest().authenticated();
+                }).build();
+>>>>>>> a75693c09ee9223d8a8755cccb1bf0fb32bc9c0a
     }
 
     @Bean
@@ -40,6 +46,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(10);
     }
 
+<<<<<<< HEAD
     @Bean  //correção do erro Unauthorized
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         UserDetails user = User.builder()
@@ -55,4 +62,12 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user, user2);
     }
 
+=======
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        UserDetails user = User.builder().username("Admnistrador").password(encoder.encode("admin1234")).roles("ADMIN").build();
+        UserDetails user2 = User.builder().username("User").password(encoder.encode("1234")).roles("USER").build();
+        return new InMemoryUserDetailsManager(user);
+    }
+>>>>>>> a75693c09ee9223d8a8755cccb1bf0fb32bc9c0a
 }
