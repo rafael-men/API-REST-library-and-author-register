@@ -45,5 +45,5 @@ Este é um projeto simples em **Java** utilizando **Spring Boot** para a constru
 - `GET /books/{id}`: Obter detalhes de um livro específico.
 - `PUT /books/{id}`: Atualizar informações de um livro.
 - `DELETE /books/{id}`: Excluir um livro.
-- - `PATCH`: Atualizar parcialmente um livro.
+-  `PATCH`: Atualizar parcialmente um livro.
 
