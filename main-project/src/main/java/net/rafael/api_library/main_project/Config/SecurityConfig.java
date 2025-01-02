@@ -24,13 +24,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable).formLogin(configurer -> {
-            configurer.loginPage("/login").permitAll();
+                    configurer.loginPage("/login").permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
-
-                        authorize.requestMatchers("/author/**").hasRole("ADMIN");
+                    authorize.requestMatchers("/books/**").hasAnyRole("USER","ADMIN");
+                    authorize.requestMatchers("/author/**").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
                     authorize.anyRequest().authenticated();
                 }).oauth2Login(Customizer.withDefaults()).build();
