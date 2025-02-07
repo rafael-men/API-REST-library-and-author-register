@@ -1,5 +1,6 @@
 package net.rafael.api_library.main_project.Models;
 
+
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
@@ -15,28 +16,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @Column(name = "login", nullable = false)
     private String login;
-
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
     @Type(ListArrayType.class)
-    @Column(name = "roles", nullable = false, columnDefinition = "varchar[]")
+    @Column(name = "roles",columnDefinition = "varchar[]")
     private List<String> roles;
 
     public User() {
     }
 
-    public User(UUID id, String login, String password, String email, List<String> roles) {
+    public User(UUID id, String login, String password, List<String> roles) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.email = email;
         this.roles = roles;
     }
 
@@ -48,14 +41,6 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -64,12 +49,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public List<String> getRoles() {
@@ -85,15 +70,11 @@ public class User {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         User user = (User) object;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(roles, user.roles);
+        return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, email, roles);
+        return Objects.hash(id, login, password, roles);
     }
 }

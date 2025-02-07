@@ -1,9 +1,9 @@
 package net.rafael.api_library.main_project.Controllers;
 
+
 import net.rafael.api_library.main_project.Dto.UserDto;
 import net.rafael.api_library.main_project.Mapper.UserMapper;
 import net.rafael.api_library.main_project.Services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     private final UserService service;
-
     private final UserMapper mapper;
 
     public UserController(UserService service, UserMapper mapper) {
@@ -23,8 +21,8 @@ public class UserController {
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveUser(@RequestBody UserDto dto) {
+    public void save(@RequestBody UserDto dto) {
         var user = mapper.toEntity(dto);
-        service.saveUser(user);
+        service.save(user);
     }
 }

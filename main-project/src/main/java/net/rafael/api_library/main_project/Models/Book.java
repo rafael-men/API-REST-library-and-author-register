@@ -16,13 +16,10 @@ public class Book {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     @Column(nullable = false)
     private String isbn;
-
     @Column(nullable = false)
     private String title;
-
     @Column(name = "date_pub")
     private LocalDate publicationDate;
 
