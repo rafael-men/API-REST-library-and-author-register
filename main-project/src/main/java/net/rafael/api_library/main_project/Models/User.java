@@ -18,7 +18,8 @@ public class User {
     private UUID id;
     private String login;
     private String password;
-
+    @Column
+    private String email;
     @Type(ListArrayType.class)
     @Column(name = "roles",columnDefinition = "varchar[]")
     private List<String> roles;
@@ -26,11 +27,12 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String login, String password, List<String> roles) {
+    public User(UUID id, String login, String password, List<String> roles, String email) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.roles = roles;
+        this.email = email;
     }
 
     public UUID getId() {
@@ -41,6 +43,14 @@ public class User {
         this.id = id;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -49,12 +59,12 @@ public class User {
         this.password = password;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getRoles() {
@@ -70,11 +80,11 @@ public class User {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         User user = (User) object;
-        return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+        return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roles);
+        return Objects.hash(id, login, password, email, roles);
     }
 }

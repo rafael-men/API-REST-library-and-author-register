@@ -1,6 +1,7 @@
 package net.rafael.api_library.main_project.Controllers;
 
 
+import jakarta.validation.Valid;
 import net.rafael.api_library.main_project.Dto.UserDto;
 import net.rafael.api_library.main_project.Mapper.UserMapper;
 import net.rafael.api_library.main_project.Services.UserService;
@@ -21,7 +22,7 @@ public class UserController {
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestBody UserDto dto) {
+    public void save(@RequestBody @Valid  UserDto dto) {
         var user = mapper.toEntity(dto);
         service.save(user);
     }
