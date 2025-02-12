@@ -1,6 +1,7 @@
 package net.rafael.api_library.main_project.Config;
 
 import net.rafael.api_library.main_project.Security.CustomUserDetails;
+import net.rafael.api_library.main_project.Security.LoginSocialSuccessHandler;
 import net.rafael.api_library.main_project.Services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,19 +22,21 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain SecurityFilterChain(HttpSecurity http, LoginSocialSuccessHandler successHandler) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-                //.formLogin( configurer -> {
-                    //configurer.loginPage("/login").permitAll();
-                //})
-                .formLogin(Customizer.withDefaults())
+                .formLogin( configurer -> {
+                    configurer.loginPage("/login").permitAll();
+                })
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
                     authorize.anyRequest().authenticated();
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> {
+                    oauth2
+                            .loginPage("/login").successHandler(successHandler);
+                })
                 .build();
     }
 

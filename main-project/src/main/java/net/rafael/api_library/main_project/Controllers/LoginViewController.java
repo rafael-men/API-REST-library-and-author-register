@@ -17,9 +17,15 @@ public class LoginViewController {
     @GetMapping("/")
     @ResponseBody
     public String homePage(Authentication authentication) {
-        if(authentication instanceof CustomAuthentication customAuth) {
+        if (authentication == null) {
+            return "Usuário não autenticado";
+        }
+
+        if (authentication instanceof CustomAuthentication customAuth) {
             System.out.println(customAuth.getName());
         }
+
         return "Olá " + authentication.getName();
     }
+
 }
