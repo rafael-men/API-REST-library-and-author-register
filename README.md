@@ -46,4 +46,19 @@ Este é um projeto simples em **Java** utilizando **Spring Boot** para a constru
 - `PUT /books/{id}`: Atualizar informações de um livro.
 - `DELETE /books/{id}`: Excluir um livro.
 -  `PATCH`: Atualizar parcialmente um livro.
+-  
+# Passo a Passo para Executar o Projeto com Docker Compose (Back-End)
 
+A seguir, apresentamos um passo a passo detalhado para executar o projeto de **Gerenciamento de Veículos** utilizando **Docker Compose**. Este processo inclui a configuração do ambiente para o **backend** e **banco de dados**, bem como a inicialização do sistema.
+
+### Pré-requisitos
+Certifique-se de ter as seguintes ferramentas instaladas na sua máquina:
+- **Docker**: Para conteinerização da aplicação.
+- **Docker Compose**: Para orquestração dos contêineres.
+
+### Construção e Execução do Projeto
+Agora, execute os seguintes passos para construir e iniciar os contêineres:
+
+Iniciar o Docker Compose: No diretório raiz do projeto, execute o comando:
+
+docker-compose up --build
