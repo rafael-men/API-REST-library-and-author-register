@@ -37,25 +37,6 @@ Este é um projeto simples em **Java** utilizando **Spring Boot** para a constru
 
 ---
 
-## 🌐 Exemplos de Endpoints
-
-### Autores
-- **`POST /authors`**: Cadastrar um novo autor.
-- **`GET /authors`**: Listar todos os autores.
-- **`GET /authors/{id}`**: Obter detalhes de um autor específico.
-- **`PUT /authors/{id}`**: Atualizar informações de um autor.
-- **`DELETE /authors/{id}`**: Excluir um autor.
-- **`PATCH /authors/{id}`**: Atualizar parcialmente um autor.
-
-### Livros
-- **`POST /books`**: Cadastrar um novo livro.
-- **`GET /books`**: Listar todos os livros.
-- **`GET /books/{id}`**: Obter detalhes de um livro específico.
-- **`PUT /books/{id}`**: Atualizar informações de um livro.
-- **`DELETE /books/{id}`**: Excluir um livro.
-- **`PATCH /books/{id}`**: Atualizar parcialmente um livro.
-
----
 
 ## 🐳 Passo a Passo para Executar o Projeto com Docker Compose
 
