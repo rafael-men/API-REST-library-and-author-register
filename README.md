@@ -1,6 +1,6 @@
-# API CRUD Bookshelf Management - Spring Boot
+# API REST Bookshelf Management - Spring Boot
 
-Este é um projeto simples em **Java** utilizando **Spring Boot** para a construção de um sistema CRUD (Create, Read, Update, Delete) de **Livros** e **Autores**. O objetivo é permitir a criação, leitura, atualização e exclusão de registros de livros e autores com persistência de dados utilizando **JPA** e um banco de dados relacional.
+Este é um projeto simples em **Java** utilizando **Spring Boot** para a construção de um sistema CRUD Back-End (Create, Read, Update, Delete) de **Livros** e **Autores**. O objetivo é permitir a criação, leitura, atualização e exclusão de registros de livros e autores com persistência de dados utilizando **JPA** e um banco de dados relacional.
 
 ---
 
