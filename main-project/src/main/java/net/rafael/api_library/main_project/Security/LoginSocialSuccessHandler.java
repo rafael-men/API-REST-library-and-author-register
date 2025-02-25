@@ -38,16 +38,18 @@ public class LoginSocialSuccessHandler extends SavedRequestAwareAuthenticationSu
         String email = oAuth2User.getAttribute("email");
         User user = service.findByEmail(email);
 
-        if(user == null) {
-
-            user = saveUserOnBase(email);
+        if (user == null) {
+            user = saveUserOnBase(email);  // Criação do usuário, se não existir
         }
 
+        // Criação de uma autenticação personalizada
         authentication = new CustomAuthentication(user);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        super.onAuthenticationSuccess(request,response,authentication);
+        // Redirecionar para o Swagger UI após login
+        response.sendRedirect("/swagger-ui.html");
     }
+
 
     private User saveUserOnBase(String email) {
         var user = new User();
