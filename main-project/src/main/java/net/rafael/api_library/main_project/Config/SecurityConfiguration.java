@@ -49,6 +49,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/users/**").permitAll();
+                    authorize.requestMatchers(
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/v3/api-docs/**",
+                            "/v3/api-docs.yaml"
+                    ).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .oauth2Login(oauth2 -> {
@@ -89,24 +95,6 @@ public class SecurityConfiguration {
         return converter;
     }
 
-    // Usuários em Memória
-
-    //@Bean
-    public UserDetailsService UserDetailsService(UserService service) {
-        //UserDetails user1 = User.builder()
-                //.username("User")
-                //.password(encoder.encode("123"))
-                //.roles("USER")
-                //.build();
-        //UserDetails user2 = User.builder()
-                //.username("Admin")
-                //.password(encoder.encode("admin123"))
-               //.roles("ADMIN")
-                //.build();
-        //return new InMemoryUserDetailsManager(user1,user2);
-
-        return new CustomUserDetails(service);
-    }
 
     // Configurar o JWK para gerar uma chave RSA
     public JWKSource<SecurityContext> jwkSource() throws Exception {
