@@ -48,10 +48,12 @@ Certifique-se de ter as seguintes ferramentas instaladas na sua máquina:
 - **Docker Compose**: Para orquestração dos contêineres.
 
 ### Construção e Execução do Projeto
+
 1. Clone o repositório do projeto:
    ```bash
-   git clone https://github.com/seu-usuario/api-crud-bookshelf.git
+   git clone https://github.com/seu-usuario/nome-do-repositório.git
    cd api-crud-bookshelf
+   
 ## 🐳 Iniciando o Projeto com Docker Compose
 
 Siga os passos abaixo para executar o projeto utilizando **Docker Compose**.
@@ -59,6 +61,7 @@ Siga os passos abaixo para executar o projeto utilizando **Docker Compose**.
 ### Passos para Execução
 
 1. **Inicie o Docker Compose**:
+   
    No diretório raiz do projeto, execute o comando:
    ```bash
    docker-compose up --build
