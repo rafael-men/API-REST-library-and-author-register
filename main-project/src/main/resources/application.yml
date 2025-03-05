@@ -1,19 +1,24 @@
 server:
   port: 8000
+
 spring:
   main:
     allow-circular-references: true
   application:
-    name: my-app
+    name: api-library
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://ep-wandering-surf-a2byyz2t.eu-central-1.pg.koyeb.app:5432/koyebdb
+    username: koyeb-adm
+    password: npg_1cKoC8YXsaOI
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect  # Defina explicitamente o Dialect
+      dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   security:
     oauth2:
       client:

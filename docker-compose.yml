@@ -1,0 +1,29 @@
+version: '3.2'
+
+services:
+  api-library:
+    build:
+      context: ./main-project
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ep-wandering-surf-a2byyz2t.eu-central-1.pg.koyeb.app:5432/koyebdb
+      SPRING_DATASOURCE_USERNAME: koyeb-adm
+      SPRING_DATASOURCE_PASSWORD: npg_1cKoC8YXsaOI
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15.4
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: koyeb-adm
+      POSTGRES_PASSWORD: npg_1cKoC8YXsaOI
+      POSTGRES_DB: koyebdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
