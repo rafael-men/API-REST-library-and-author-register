@@ -11,6 +11,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ep-wandering-surf-a2byyz2t.eu-central-1.pg.koyeb.app:5432/koyebdb
       SPRING_DATASOURCE_USERNAME: koyeb-adm
       SPRING_DATASOURCE_PASSWORD: npg_1cKoC8YXsaOI
+    volumes:
+      - ./main-project/.env:/app/.env
     depends_on:
       - postgres
 
