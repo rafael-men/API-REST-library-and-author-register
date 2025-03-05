@@ -1,9 +1,11 @@
-FROM openjdk:18-jdk-slim
 
-RUN apt-get update && apt-get install -y netcat maven
+FROM maven:3.8.6-openjdk-18 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
-ARG JAR_FILE=target/*.jar
-RUN cp ${JAR_FILE} app.jar
+
+
+FROM openjdk:18-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
