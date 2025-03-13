@@ -52,7 +52,7 @@ Certifique-se de ter as seguintes ferramentas instaladas na sua máquina:
 1. Clone o repositório do projeto:
    ```bash
    git clone https://github.com/seu-usuario/nome-do-repositório.git
-   cd api-crud-bookshelf
+   ```
    
 ## 🐳 Iniciando o Projeto com Docker Compose
 
@@ -63,5 +63,7 @@ Siga os passos abaixo para executar o projeto utilizando **Docker Compose**.
 1. **Inicie o Docker Compose**:
    
    No diretório raiz do projeto, execute o comando:
+   
    ```bash
-   docker-compose up --build
+   docker compose up --build
+   ```
